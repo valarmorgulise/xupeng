@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/xupeng/valarmorgulis/xupeng/xupeng/util.cc
+util.h
+/home/xupeng/valarmorgulis/xupeng/xupeng/util.h
+sys/stat.h
+-
+sys/syscall.h
+-
+sys/time.h
+-
+sys/types.h
+-
+unistd.h
+-
+
+/home/xupeng/valarmorgulis/xupeng/xupeng/util.h
+stdint.h
+-
+string
+-
+vector
+-
+

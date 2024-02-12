@@ -2,6 +2,8 @@
 #define __PENG_LOG_H
 
 #include "singleton.h"
+#include "thread.h"
+#include "util.h"
 #include <cstdint>
 #include <fstream>
 #include <functional>
@@ -16,11 +18,11 @@
 
 #define PENG_LOG_LEVEL(logger, level)                                          \
   if (logger->getLevel() <= level)                                             \
-    PENG::LogEventWrap(                                                        \
-        PENG::LogEvent::ptr(new PENG::LogEvent(                                \
-            logger, level, __FILE__, __LINE__, 0, PENG::getThreadId(),         \
-            PENG::getFiberId(), time(0), PENG::Thread::GetName())))            \
-        .getSS();
+  PENG::LogEventWrap(                                                          \
+      PENG::LogEvent::ptr(new PENG::LogEvent(                                  \
+          logger, level, __FILE__, __LINE__, 0, PENG::GetThreadId(),           \
+          PENG::GetFiberId(), time(0), PENG::Thread::GetName())))              \
+      .getSS()
 
 #define PENG_LOG_DEBUG(logger) PENG_LOG_LEVEL(logger, PENG::LogLevel::DEBUG)
 #define PENG_LOG_WARN(logger) PENG_LOG_LEVEL(logger, PENG::LogLevel::WARN)
@@ -32,29 +34,29 @@
   if (logger->getLevel() <= level)                                             \
   PENG::LogEventWrap(                                                          \
       PENG::LogEvent::ptr(new PENG::LogEvent(                                  \
-          logger, level, __FILE__, __LINE__, 0, PENG::getThreadId(),           \
-          PENG::getFiberId(), time(0), PENG::Thread::GetName())))              \
+          logger, level, __FILE__, __LINE__, 0, PENG::GetThreadId(),           \
+          PENG::GetFiberId(), time(0), PENG::Thread::GetName())))              \
       .getEvent()                                                              \
       ->format(fmt, __VA_ARGS__)
 
 #define PENG_LOG_FMT_DEBUG(logger, fmt, ...)                                   \
-  PENG_LOG_FMT_LEVEL(logger, PENG::LogEvent::DEBUG, fmt, __VA_ARGS__)
+  PENG_LOG_FMT_LEVEL(logger, PENG::LogLevel::DEBUG, fmt, __VA_ARGS__)
 
 #define PENG_LOG_FMT_INFO(logger, fmt, ...)                                    \
-  PENG_LOG_FMT_LEVEL(logger, PENG::LogEvent::INFO, fmt, __VA_ARGS__)
+  PENG_LOG_FMT_LEVEL(logger, PENG::LogLevel::INFO, fmt, __VA_ARGS__)
 
 #define PENG_LOG_FMT_WARN(logger, fmt, ...)                                    \
-  PENG_LOG_FMT_LEVEL(logger, PENG::LogEvent::WARN, fmt, __VA_ARGS__)
+  PENG_LOG_FMT_LEVEL(logger, PENG::LogLevel::WARN, fmt, __VA_ARGS__)
 
 #define PENG_LOG_FMT_ERROR(logger, fmt, ...)                                   \
-  PENG_LOG_FMT_LEVEL(logger, PENG::LogEvent::ERROR, fmt, __VA_ARGS__)
+  PENG_LOG_FMT_LEVEL(logger, PENG::LogLevel::ERROR, fmt, __VA_ARGS__)
 
 #define PENG_LOG_FMT_FATAL(logger, fmt, ...)                                   \
-  PENG_LOG_FMT_LEVEL(logger, PENG::LogEvent::FATAL, fmt, __VA_ARGS__)
+  PENG_LOG_FMT_LEVEL(logger, PENG::LogLevel::FATAL, fmt, __VA_ARGS__)
 
-#define PENG_LOG_ROOT() PENG::LoggerMgr::getInstance()->getRoot()
+#define PENG_LOG_ROOT() PENG::LoggerMgr::GetInstance()->getRoot()
 
-#define PENG_LOG_NAME(name) PENG::LoggerMgr::getInstance()->getLogger(name)
+#define PENG_LOG_NAME(name) PENG::LoggerMgr::GetInstance()->getLogger(name)
 
 namespace PENG {
 class Logger;
