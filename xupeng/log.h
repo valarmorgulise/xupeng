@@ -153,6 +153,7 @@ class LogAppender {
 
 public:
   typedef std::shared_ptr<LogAppender> ptr;
+  typedef Mutex MutexType;
   virtual ~LogAppender() {}
   virtual void log(std::shared_ptr<Logger> logger, LogLevel::Level level,
                    LogEvent::ptr event) = 0;
@@ -165,6 +166,7 @@ public:
 protected:
   LogLevel::Level m_level = LogLevel::DEBUG;
   bool m_hasFormatter = false;
+  MutexType m_mutex;
   LogFormatter::ptr m_formatter;
 };
 
@@ -173,6 +175,8 @@ class Logger : public std::enable_shared_from_this<Logger> {
 
 public:
   typedef std::shared_ptr<Logger> ptr;
+  typedef Mutex MutexType;
+
   Logger(const std::string &name = "root");
   void log(LogLevel::Level level, LogEvent::ptr event);
   void debug(LogEvent::ptr event);
@@ -197,6 +201,7 @@ private:
   std::list<LogAppender::ptr> m_appenders;
   LogFormatter::ptr m_formatter;
   Logger::ptr m_root;
+  MutexType m_mutex;
 };
 
 class StdoutLogAppender : public LogAppender {
@@ -225,6 +230,8 @@ private:
 
 class LoggerManager {
 public:
+  typedef Mutex MutexType;
+
   LoggerManager();
   Logger::ptr getLogger(const std::string &name);
   void init();
@@ -232,6 +239,7 @@ public:
   std::string toYamlString();
 
 private:
+  MutexType m_mutex;
   std::map<std::string, Logger::ptr> m_loggers;
   Logger::ptr m_root;
 };

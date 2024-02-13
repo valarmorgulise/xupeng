@@ -27,3 +27,11 @@ static Logger::ptr g_log = PENG_LOG_NAME("system");
 //m_root, m_system->m_root 当logger的appenders为空， 使用root写logger
 
 ```
+# 线程库
+Thread， Mutex
+Pthread
+
+pthread pthread_create
+
+互斥量 Mutex
+信号量 semaphore
