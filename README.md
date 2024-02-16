@@ -35,3 +35,45 @@ pthread pthread_create
 
 互斥量 Mutex
 信号量 semaphore
+
+和log整合
+Logger, appender
+
+Spinlock， 替换Mutex
+写文件， 周期性， reopen
+
+# 协程库
+定义协程接口
+ucontext_t 
+macro
+
+```
+Thread->main_fiber <-------->sub_fiber
+            ^
+            |
+            |
+            v
+        sub_fiber
+```
+
+怎么能让协程在线程切换
+协程调度模块scheduler
+```
+线程池概念，可以分配多个线程
+ 1 - n                     1-M 
+scheduler   --> thread    ---> fiber
+1.线程池，分配一组线程
+2.协程调度器， 将协程，指定到相应的线程上执行
+
+N : M
+
+m_threads
+<function<void()>, fiber, thread_id> m_ifibers
+
+schedule(func/fiber)
+
+start()
+stop()
+run() 协程调度模块核心
+
+```
