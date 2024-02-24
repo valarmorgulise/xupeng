@@ -1,0 +1,12 @@
+/home/xupeng/valarmorgulis/xupeng/build/CMakeFiles/test_hook.dir
+/home/xupeng/valarmorgulis/xupeng/build/CMakeFiles/test_iomanager.dir
+/home/xupeng/valarmorgulis/xupeng/build/CMakeFiles/test_scheduler.dir
+/home/xupeng/valarmorgulis/xupeng/build/CMakeFiles/test_address.dir
+/home/xupeng/valarmorgulis/xupeng/build/CMakeFiles/test_fiber.dir
+/home/xupeng/valarmorgulis/xupeng/build/CMakeFiles/rebuild_cache.dir
+/home/xupeng/valarmorgulis/xupeng/build/CMakeFiles/test_util.dir
+/home/xupeng/valarmorgulis/xupeng/build/CMakeFiles/test_config.dir
+/home/xupeng/valarmorgulis/xupeng/build/CMakeFiles/edit_cache.dir
+/home/xupeng/valarmorgulis/xupeng/build/CMakeFiles/test_thread.dir
+/home/xupeng/valarmorgulis/xupeng/build/CMakeFiles/test.dir
+/home/xupeng/valarmorgulis/xupeng/build/CMakeFiles/xupeng.dir
