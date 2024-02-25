@@ -496,21 +496,21 @@ FileLogAppender::FileLogAppender(const std::string &filename)
 
 void FileLogAppender::log(Logger::ptr logger, LogLevel::Level level,
                           LogEvent::ptr event) {
-  // if (level >= m_level) {
-  //   uint64_t now = event->getTime();
-  //   if (now >= (m_lastTime + 3)) {
-  //     reopen();
-  //     m_lastTime = now;
-  //   }
-  //   MutexType::Lock lock(m_mutex);
-  //   if (!m_formatter->format(m_filestream, logger, level, event)) {
-  //     std::cout << "error" << std::endl;
-  //   }
-  // }
   if (level >= m_level) {
+    uint64_t now = event->getTime();
+    if (now >= (m_lastTime + 3)) {
+      reopen();
+      m_lastTime = now;
+    }
     MutexType::Lock lock(m_mutex);
-    m_filestream << m_formatter->format(logger, level, event);
+    if (!m_formatter->format(m_filestream, logger, level, event)) {
+      std::cout << "error" << std::endl;
+    }
   }
+  // if (level >= m_level) {
+  //   MutexType::Lock lock(m_mutex);
+  //   m_filestream << m_formatter->format(logger, level, event);
+  // }
 }
 
 std::string FileLogAppender::toYamlString() {

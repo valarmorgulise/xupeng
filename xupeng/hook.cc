@@ -96,6 +96,9 @@ static ssize_t do_io(int fd, OriginFun fun, const char *hook_fun_name,
   if (!PENG::t_hook_enable) {
     return fun(fd, std::forward<Args>(args)...);
   }
+
+  PENG_LOG_DEBUG(g_logger) << "do_io<" << hook_fun_name << ">";
+
   PENG::FdCtx::ptr ctx = PENG::FdMgr::GetInstance()->get(fd);
   if (!ctx) {
     return fun(fd, std::forward<Args>(args)...);

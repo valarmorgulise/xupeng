@@ -2,6 +2,7 @@
 #define __PENG_MUTEX_H
 
 #include "noncopyable.h"
+#include <atomic>
 #include <cstdint>
 #include <functional>
 #include <memory>
@@ -221,6 +222,43 @@ public:
   void rdlock() {}
   void wdlock() {}
   void unlock() {}
+};
+
+/**
+ * @brief 读写锁
+ */
+class Spinlock : Noncopyable {
+public:
+  typedef ScopedLockImpl<Spinlock> Lock;
+  Spinlock() { pthread_spin_init(&m_mutex, 0); }
+  ~Spinlock() { pthread_spin_destroy(&m_mutex); }
+  void lock() { pthread_spin_lock(&m_mutex); }
+
+  void unlock() { pthread_spin_unlock(&m_mutex); }
+
+private:
+  pthread_spinlock_t m_mutex;
+};
+
+/**
+ * @brief 原子锁
+ */
+class CASLock : Noncopyable {
+public:
+  typedef ScopedLockImpl<CASLock> Lock;
+  CASLock() { m_mutex.clear(); }
+  ~CASLock() {}
+  void lock() {
+    while (std::atomic_flag_test_and_set_explicit(&m_mutex,
+                                                  std::memory_order_release))
+      ;
+  }
+  void unlock() {
+    std::atomic_flag_clear_explicit(&m_mutex, std::memory_order_release);
+  }
+
+private:
+  volatile std::atomic_flag m_mutex;
 };
 
 } // namespace PENG
