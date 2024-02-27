@@ -21,9 +21,11 @@ set(LIB_SRC
   xupeng/hook.cc
   xupeng/address.cc
   xupeng/scheduler.cc
+  xupeng/bytearray.cc
   xupeng/iomanager.cc
   xupeng/timer.cc
   xupeng/config.cc
+  xupeng/socket.cc
   xupeng/util.cc)
 
 
@@ -82,6 +84,16 @@ add_executable(test_address tests/test_address.cc)
 add_dependencies(test_address xupeng) 
 target_link_libraries(test_address ${LIB_LIB})
 force_redefine_file_macro_for_sources(test_address) #__FILE__
+
+add_executable(test_socket tests/test_socket.cc)
+add_dependencies(test_socket xupeng) 
+target_link_libraries(test_socket ${LIB_LIB})
+force_redefine_file_macro_for_sources(test_socket) #__FILE__
+
+add_executable(test_bytearray tests/test_bytearray.cc)
+add_dependencies(test_bytearray xupeng) 
+target_link_libraries(test_bytearray ${LIB_LIB})
+force_redefine_file_macro_for_sources(test_bytearray) #__FILE__
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)

@@ -190,6 +190,27 @@ fd相关的 （fcntl, ioctl, ...)
                 | Socket |
                 ----------
 ## http协议开发
+HTTP/1.1 -API
+
+HttpRequest
+HttpResponse 
+
+GET / HTTP/1.1 
+host: www.sylar.top 
+
+HTTP/1.0 200 OK
+Pragma: no-cache 
+Content-Type: text/html
+Content-Length: 14988 
+Connection: close 
+
+uri: http://www.sylar.top:80/page/xxx? id = 10& v=20 #fr 
+    http, 
+    www.sylar.top, host 
+    80 
+    /age/xxx, path
+    id = 10&v=20 param 
+    fr fragment
 
 
 

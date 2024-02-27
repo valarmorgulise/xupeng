@@ -8,9 +8,9 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-namespace PENG {
+static PENG::Logger::ptr g_logger = PENG_LOG_NAME("system");
 
-PENG::Logger::ptr g_logger = PENG_LOG_NAME("system");
+namespace PENG {
 
 pid_t GetThreadId() { return syscall(SYS_gettid); }
 
@@ -51,6 +51,22 @@ uint64_t GetCurrentUS() {
   struct timeval tv;
   gettimeofday(&tv, NULL);
   return tv.tv_sec * 1000 * 1000ul + tv.tv_usec;
+}
+
+static int __lstat(const char *file, struct stat *st = nullptr) {
+  struct stat lst;
+  int ret = lstat(file, &lst);
+  if (st) {
+    *st = lst;
+  }
+  return ret;
+}
+
+bool FSUtil::Unlink(const std::string &filename, bool exist) {
+  if (!exist && __lstat(filename.c_str())) {
+    return true;
+  }
+  return ::unlink(filename.c_str()) == 0;
 }
 
 } // namespace PENG
